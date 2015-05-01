@@ -21,7 +21,6 @@ class Method
 
 		$this->request = $request;
 	}
-
 	/**
      * Add additional headers that may be implemented in later versions
      * of the umd.io API i.e. authorization
@@ -35,6 +34,4 @@ class Method
         
         return $headers;
     }
-
-
 }

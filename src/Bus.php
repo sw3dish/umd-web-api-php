@@ -196,5 +196,4 @@ class Bus extends Method
 		$response = $this->request->api('GET', 'v0/bus/locations/', array(), $headers);
 		return $response["body"];
 	}
-	
 }

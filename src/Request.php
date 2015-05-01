@@ -25,9 +25,6 @@ class Request
 	{
 		return $this->send($method, self::API_URL . $uri, $parameters, $headers);
 	}
-
-	
-
     /**
      * Make a request to umd.io
      * Consider using one of the convenience methods (currently only api())
@@ -86,7 +83,6 @@ class Request
                 break;
         }
 
-
         $options[CURLOPT_URL] = $url;
 
         $ch = curl_init();
@@ -127,15 +123,12 @@ class Request
             }
         }
 
-
         return array(
             'body' => $body,
             'headers' => $headers,
             'status' => $status,
         );
-
     }
-
     /**
      * Set the return type for the response body.
      *
@@ -147,7 +140,6 @@ class Request
     {
         $this->returnAssoc = $returnAssoc;
     }
-
     /**
      * Get a value indicating the response body type.
      *
@@ -157,5 +149,4 @@ class Request
     {
         return $this->returnAssoc;
     }
-
 }

@@ -3,7 +3,6 @@ namespace UMDWebAPI;
 
 class Map extends Method
 {
-
 	/**
 	 * Constructor
 	 * Sets up Request object
@@ -17,23 +16,48 @@ class Map extends Method
 		parent::__construct($request);
 	}
 	/**
-     * Get location data about one or more buildings
-     * http://api.umd.io/v0/map/buildings
-     *
-     * @param string|array buildingNumbers : Optional. Omitting will return all buildings
-     * - string buildingNumbers : single building number
-     * - array buildingNumbers : an array of building numbers
-     *
-     *
-     * @return bool Whether the tracks was successfully added.
+	 *
+	 * Buildings endpoint
+	 * http://api.umd.io/v0/map/buildings/
+	 *
 	 */
-	public function getBuildings($buildingNumbers = "") 
+	/**
+     * Get location data about one or more buildings
+     * http://api.umd.io/v0/map/buildings/<building_number>
+     * for more information see http://umd.io/map/#get_buildings
+     *
+     * @param string|array $buildingNumbers :
+     * - string $buildingNumbers : single building number
+     * - array $buildingNumbers : an array of building numbers
+     *
+     * @return array|object : The response body. Contains one or more Building objects.
+     * Type is controlled by Request::setReturnAssoc().
+     * More information can be found at http://umd.io/map/#building_object
+	 */
+	public function getBuildings($buildingNumbers) 
 	{
 		$buildingNumbers = implode(',', (array) $buildingNumbers);
 		$buildingNumbers = urlencode($buildingNumbers);
 		$headers = $this->headers();
 
 		$response = $this->request->api('GET', '/v0/map/buildings/' . $buildingNumbers, array(), $headers);
+
+		return $response["body"];
+	}
+	/**
+     * Get location data about all buildings
+     * http://api.umd.io/v0/map/buildings
+     * for more information, see http://umd.io/map/#list_buildings
+     *
+     * @return array|object : The response body. Contains one or more Building objects.
+     * Type is controlled by Request::setReturnAssoc().
+     * More information can be found at http://umd.io/map/#building_object
+	 */
+	public function getAllBuildings()
+	{
+		$headers = $this->headers();
+
+		$response = $this->request->api('GET', '/v0/map/buildings/', array(), $headers);
 
 		return $response["body"];
 	}

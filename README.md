@@ -34,4 +34,3 @@ Download the lastest version of `umd-web-api` and include the required files. It
 ## License
 
 `umd-web-api` is licensed under the MIT License. Please see LICENSE.md for the full text.
-

@@ -1,5 +1,5 @@
 {
-    "name": "sw3dish/umd-io-api-php",
+    "name": "sw3dish/umd-web-api",
     "description": "PHP implementation of UMD.io's Web API",
     "type": "library",
     "require": {
@@ -19,7 +19,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "SpotifyWebAPI\\": "src/"
+            "UMDWebAPI\\": "src/"
         }
     }
 }

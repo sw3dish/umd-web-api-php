@@ -1,0 +1,25 @@
+{
+    "name": "sw3dish/umd-io-api-php",
+    "description": "PHP implementation of UMD.io's Web API",
+    "type": "library",
+    "require": {
+        "php": ">=5.3.3",
+        "ext-curl": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.*",
+        "satooshi/php-coveralls": "dev-master"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Colin Burr",
+            "email": "cburr1014@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "SpotifyWebAPI\\": "src/"
+        }
+    }
+}

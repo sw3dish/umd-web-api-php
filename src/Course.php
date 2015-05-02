@@ -18,7 +18,7 @@ class Course extends Method
 	/*
 	 *
 	 * Courses Endpoint
-	 * http://api.umd.io/v0/bus/courses
+	 * http://api.umd.io/v0/courses
 	 *
 	 */
 	/**
@@ -35,7 +35,7 @@ class Course extends Method
      * @return array|object : The response body. Contains one or more objects with 
      * course_id, name, and department
      * Type is controlled by Request::setReturnAssoc().
-     * More information can be found at http://umd.io/bus/#locations
+     * More information can be found at http://umd.io/courses/#list_courses
 	 */
 	public function getAllCourses($params = array())
 	{	
@@ -48,8 +48,8 @@ class Course extends Method
 	}
 	/**
      * Get data about one or more courses
-     * http://api.umd.io/v0/courses/<route_id>
-     * for more information see http://umd.io/courses/#get_routes
+     * http://api.umd.io/v0/courses/<course_id>
+     * for more information see http://umd.io/courses/#get_courses
      *
      * @param string|array $courseIds :
      * - string $courseIds : single course identifier
@@ -57,7 +57,7 @@ class Course extends Method
      *
      * @return array|object : The response body. Contains one or more Course objects.
      * Type is controlled by Request::setReturnAssoc().
-     * More information on Course object can be found at http://umd.io/course/#course_object
+     * More information on Course object can be found at http://umd.io/courses/#course_object
 	 */
 	public function getCourses($courseIds)
 	{
@@ -68,5 +68,55 @@ class Course extends Method
 		$response = $this->request->api('GET', '/v0/courses/' . $courseIds, array(), $headers);
 		return $response["body"];
 	}
+	/*
+	 *
+	 * Sections Endpoint
+	 * http://api.umd.io/v0/courses/sections
+	 *
+	 */
+	/**
+     * Get data about one or more sections
+     * http://api.umd.io/v0/courses/sections/<section_id>
+     * for more information see http://umd.io/courses/#get_sections
+     *
+     * @param string|array $sectionIds :
+     * - string $sectionIds : single section identifier
+     *   always the related course_id with a four-digit section number appended to it
+     * - array $sectionIds : an array of section identifiers
+     *
+     * @return array|object : The response body. Contains one or more Section objects.
+     * Type is controlled by Request::setReturnAssoc().
+     * More information on Section object can be found at http://umd.io/courses/#section_object
+	 */
+	public function getSections($sectionIds)
+	{
+		$sectionIds = implode(',', (array) $sectionIds);
+		$sectionIds = urlencode($sectionIds);
+		$headers = $this->headers();
 
+		$response = $this->request->api('GET', '/v0/courses/sections/' . $sectionIds, array(), $headers);
+		return $response["body"];
+	}
+	/*
+	 *
+	 * Departments Endpoint
+	 * http://api.umd.io/v0/courses/departments
+	 *
+	 */
+	/**
+     * Get data about one or more departments
+     * http://api.umd.io/v0/courses/departments
+     * for more information see http://umd.io/courses/#get_departments
+     *
+     * @return array|object : The response body. Contains one or more department ids.
+     * Type is controlled by Request::setReturnAssoc().
+     * More information can be found at http://umd.io/courses/#get_departments
+	 */
+	public function getAllDepartments()
+	{
+		$headers = $this->headers();
+
+		$response = $this->request->api('GET', '/v0/courses/departments/', array(), $headers);
+		return $response["body"];
+	}
 }

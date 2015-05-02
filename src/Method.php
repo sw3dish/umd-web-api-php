@@ -22,9 +22,9 @@ class Method
 		$this->request = $request;
 	}
 	/**
-     * Add additional headers that may be implemented in later versions
+     * Add additional headers that may be implemented in later versions (such as auth, etc)
      * of the umd.io API i.e. authorization
-     * As of 4/30/2015, none are needed 
+     * As of v 0.1.0, none are needed 
      *
      * @return array: any additional headers.
      */

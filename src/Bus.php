@@ -20,7 +20,7 @@ class Bus extends Method
 	/*
 	 *
 	 * Routes Endpoint
-	 * http://api.umd.io/v0/bus/routes/
+	 * http://api.umd.io/v0/bus/routes
 	 *
 	 */
 	/**
@@ -28,9 +28,9 @@ class Bus extends Method
      * http://api.umd.io/v0/bus/routes/<route_id>
      * for more information see http://umd.io/bus/#get_routes
      *
-     * @param string|array $routeNumbers :
-     * - string $routeNumbers : single bus route identifier
-     * - array $routeNumbers : an array of bus route identifiers
+     * @param string|array $routeIds :
+     * - string $routeIds : single bus route identifier
+     * - array $routeIds : an array of bus route identifiers
      *
      * @return array|object : The response body. Contains one or more Route objects.
      * Type is controlled by Request::setReturnAssoc().
@@ -131,7 +131,7 @@ class Bus extends Method
 	/*
 	 *
 	 * Stops Endpoint
-	 * http://api.umd.io/v0/bus/stops/
+	 * http://api.umd.io/v0/bus/stops
 	 *
 	 */
 	/**
@@ -176,11 +176,11 @@ class Bus extends Method
 	/*
 	 *
 	 * Locations Endpoint
-	 * http://api.umd.io/v0/bus/locations/
+	 * http://api.umd.io/v0/bus/locations
 	 *
 	 */
 	/**
-     * Get data about one or more bus locations
+     * Get data about all bus locations
      * http://api.umd.io/v0/bus/locations
      * for more information see http://umd.io/bus/#locations
      *

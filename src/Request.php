@@ -114,7 +114,7 @@ class Request
                 if (isset($error['message']) && isset($error['error_code'])) {
                     throw new UMDWebAPIException($error['message'], $error['error_code']);
                 } elseif (isset($error['message'])) {
-                	throw new UMDWebAPIException($error['message'], $status)
+                	throw new UMDWebAPIException($error['message'], $status);
                 } else {
                     throw new UMDWebAPIException($error, $status);
                 }

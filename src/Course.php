@@ -26,11 +26,39 @@ class Course extends Method
      * http://api.umd.io/v0/courses
      * for more information see http://umd.io/courses/#list_courses
      *
+     * If a query string is formatted : http://api.umd.io/v0/courses?<key>=<value>
+     * then $params = array("<key>" => array("comparison" => "=", "value" => "<value>");
+     *
+     * If a query string supports comparison operators such as "!=", "<", "<=", ">", ">="
+     * then a query string reading : http://api.umd.io/v0/courses?<key>!=<value> becomes
+     * $params = array("<key>" => array("comparison" => "!=", "value" => "<value>"));
+     *
+     * If a query string supports comma-separated values, add them to the "value" parameter as 
+     * an indexed array. For example : http://api.umd.io/v0/courses?<key>=<value1>,<value2>
+     * becomes : $params = array("<key>" => array("comparison") => "=", 
+     * "value" => array("value1", "value2"));
+     *
+     * If a query string supports the use of the pipe operator, add a key to the array
+     * containing the comparison operator with the key "includeAllValues", with the value
+     * of true.
+     * For example : http://api.umd.io/v0/courses?<key>=<value1>|<value2>
+     * becomes : $params = array("<key>" => array("comparison") => "=", 
+     * "value" => array("value1", "value2"), "includeAllValues" => true);
+     *
      * @param array $params : An associative array parameters to be included in the
-     * query string. 
+     * query string.
      * - string semester : Optional. a six-digit string <year><month>, defaults to 
      *   current semester. See http://api.umd.io/v0/courses?semester=012345 for 
-     *   a list of available semesters.
+     *   a list of available semesters. Does not support multiple values. 
+     *   Does not support non-standard comparison operators
+     * - string page : Optional. Pagination is supported and is 1-based, defaults to
+     *   first page. Does not support non-standard comparison operators.
+     * - string per_page: Optional. Number of items per page, defaults to 30. Does not 
+     *   support non-standard comparison operators.
+     * - string expand: Optional. Only valid value is sections. Will expand Section objects 
+     *   response body. Does not support non-standard comparison operators.
+     * - string|array sort : Optional. Course object properties to search by. Append with "-"(minus)
+     *   for descending order. Defaults to ascending order.
      *
      * @return array|object : The response body. Contains one or more objects with 
      * course_id, name, and department
@@ -39,11 +67,35 @@ class Course extends Method
 	 */
 	public function getAllCourses($params = array())
 	{	
-		$params = http_build_query($params);
+		//start with an empty string
+		$queryString = "";
+		//loop over our params array
+		foreach ($params as $key => $value) {
+			//make sure, at the least, we have a key and value
+			if (isset($key) && isset($value) && isset($value["value"])) {
+				//add the key to the string
+				$queryString .= urlencode(strtolower((String) $key));
+				//if there's a comparison, add it, otherwise add "="
+				if (isset($value["comparison"])) {
+					$queryString .= urlencode(strtolower((String) $value["comparison"]));
+				} else {
+					$queryString .= "%3D";
+				}
+				//add the value/s to the string, after expanding the array with the 
+				//corresponding glue if there is one.
+				if (isset($value["includeAllValues"]) && !empty("includeAllValues"])) {
+					$queryString .= urlencode(implode('|', (array) $value["value"]));
+				} else {
+					$queryString .= urlencode(implode(',', (array) $value["value"]));
+				}
+				//add a trailing &
+				$queryString .= "%26";
+			}
+		}
 
 		$headers = $this->headers();
 
-		$response = $this->request->api('GET', 'v0/courses?' . $params, array(), $headers);
+		$response = $this->request->api('GET', 'v0/courses?' . $queryString, array(), $headers);
 		return $response["body"];
 	}
 	/**
@@ -61,11 +113,73 @@ class Course extends Method
 	 */
 	public function getCourses($courseIds)
 	{
-		$courseIds = implode(',', (array) $courseIds);
-		$courseIds = urlencode($courseIds);
+		$courseIds = urlencode(implode(',', (array) $courseIds));
 		$headers = $this->headers();
 
 		$response = $this->request->api('GET', '/v0/courses/' . $courseIds, array(), $headers);
+		return $response["body"];
+	}
+	/**
+     * Get data about certain courses using course properties
+     * http://api.umd.io/v0/courses
+     * for more information see http://umd.io/courses/#search
+     * If a query string is formatted : http://api.umd.io/v0/courses?<key>=<value>
+     * then $params = array("<key>" => array("comparison" => "=", "value" => "<value>");
+     *
+     * If a query string supports comparison operators such as "!=", "<", "<=", ">", ">="
+     * then a query string reading : http://api.umd.io/v0/courses?<key>!=<value> becomes
+     * $params = array("<key>" => array("comparison" => "!=", "value" => "<value>"));
+     *
+     * If a query string supports comma-separated values, add them to the "value" parameter as 
+     * an indexed array. For example : http://api.umd.io/v0/courses?<key>=<value1>,<value2>
+     * becomes : $params = array("<key>" => array("comparison") => "=", 
+     * "value" => array("value1", "value2"));
+     *
+     * @param array $params : An associative array parameters to be included in the
+     * query string.
+     * - string semester : Optional. a six-digit string <year><month>, defaults to 
+     *   current semester. See http://api.umd.io/v0/courses?semester=012345 for 
+     *   a list of available semesters.
+     * - string page : Optional. Pagination is supported and is 1-based, defaults to
+     *   first page. Does not support non-standard comparison operators.
+     * - string per_page: Optional. Number of items per page, defaults to 30. Does not 
+     *   support non-standard comparison operators.
+     * - string expand: Optional. Only valid value is sections. Will expand Section objects 
+     *   response body. Does not support non-standard comparison operators.
+     * - string 
+     * @todo add searchable course properties, relavant comparison operators
+     *
+     * @return array|object : The response body. Contains one or more objects with 
+     * course_id, name, and department
+     * Type is controlled by Request::setReturnAssoc().
+     * More information can be found at http://umd.io/courses/#list_courses
+	 */
+	public function searchCourses($params = array())
+	{	
+		//start with an empty string
+		$queryString = "";
+		//loop over our params array
+		foreach ($params as $key => $value) {
+			//make sure, at the least, we have a key and value
+			if (isset($key) && isset($value) && isset($value["value"])) {
+				//add the key to the string
+				$queryString .= urlencode(strtolower((String) $key));
+				//if there's a comparison, add it, otherwise add "="
+				if (isset($value["comparison"])) {
+					$queryString .= urlencode(strtolower((String) $value["comparison"]));
+				} else {
+					$queryString .= "%3D";
+				}
+				//add the value to the string, after expanding the array if there is one.
+				$queryString .= urlencode(implode(',', (array) $value["value"]));
+				//add a trailing &
+				$queryString .= "%26";
+			}
+		}
+
+		$headers = $this->headers();
+
+		$response = $this->request->api('GET', 'v0/courses?' . $params, array(), $headers);
 		return $response["body"];
 	}
 	/*

@@ -36,8 +36,8 @@ class Map extends Method
 	 */
 	public function getBuildings($buildingIds) 
 	{
-		$buildingIds = implode(',', (array) $buildingIds);
-		$buildingIds = urlencode($buildingIds);
+		$buildingIds = urlencode(implode(',', (array) $buildingIds));
+
 		$headers = $this->headers();
 
 		$response = $this->request->api('GET', '/v0/map/buildings/' . $buildingIds, array(), $headers);

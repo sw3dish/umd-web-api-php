@@ -40,6 +40,7 @@ class Bus extends Method
 	{
 		$routeIds = implode(',', (array) $routeIds);
 		$routeIds = urlencode($routeIds);
+		
 		$headers = $this->headers();
 
 		$response = $this->request->api('GET', '/v0/bus/routes/' . $routeIds, array(), $headers);

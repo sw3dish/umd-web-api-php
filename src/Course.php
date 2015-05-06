@@ -68,7 +68,7 @@ class Course extends Method
 
 		$headers = $this->headers();
 
-		$response = $this->request->api('GET', 'v0/courses/list?' . $queryString, array(), $headers);
+		$response = $this->request->api('GET', '/v0/courses/list?' . $queryString, array(), $headers);
 		return $response["body"];
 	}
 	/**
@@ -87,7 +87,7 @@ class Course extends Method
 	public function getCourses($courseIds)
 	{
 		$courseIds = urlencode(implode(',', (array) $courseIds));
-		
+
 		$headers = $this->headers();
 
 		$response = $this->request->api('GET', '/v0/courses/' . $courseIds, array(), $headers);
@@ -157,7 +157,7 @@ class Course extends Method
 
 		$headers = $this->headers();
 
-		$response = $this->request->api('GET', 'v0/courses?' . $queryString, array(), $headers);
+		$response = $this->request->api('GET', '/v0/courses?' . $queryString, array(), $headers);
 		return $response["body"];
 	}
 	/*
@@ -212,7 +212,7 @@ class Course extends Method
 
 		$headers = $this->headers();
 
-		$response = $this->request->api('GET', 'v0/courses/sections?' . $queryString, array(), $headers);
+		$response = $this->request->api('GET', '/v0/courses/sections?' . $queryString, array(), $headers);
 		return $response["body"];
 	}
 	/**
@@ -305,7 +305,7 @@ class Course extends Method
 
 		$headers = $this->headers();
 
-		$response = $this->request->api('GET', 'v0/courses/sections?' . $queryString, array(), $headers);
+		$response = $this->request->api('GET', '/v0/courses/sections?' . $queryString, array(), $headers);
 		return $response["body"];
 	}
 	/*
@@ -330,47 +330,5 @@ class Course extends Method
 		$response = $this->request->api('GET', '/v0/courses/departments/', array(), $headers);
 		return $response["body"];
 	}
-	/**
-	 *
-	 * Helper functions 
-	 *
-	 */
-	/**
-	 * Convert params array into query string
-	 * @see searchCourses, searchSections
-	 *
-	 * @param array $params : An associative array parameters to be included in the
-     * query string.
-     *
-     * @return string : Query string to be used in the url of the api request.
-	 */
-	private function convertParamsToQueryString($params = array())
-	{
-		//start with an empty string
-		$queryString = "";
-		//loop over our params array
-		foreach ($params as $key => $value) {
-			//make sure, at the least, we have a key and value
-			if (isset($key) && isset($value) && isset($value["value"])) {
-				//add the key to the string
-				$queryString .= urlencode(strtolower((String) $key));
-				//if there's a comparison, add it, otherwise add "="
-				if (isset($value["comparison"])) {
-					$queryString .= (String) $value["comparison"];
-				} else {
-					$queryString .= "=";
-				}
-				//add the value to the string, after expanding the array if there is one.
-				if (isset($value["includeAllValues"])) {
-					$queryString .= urlencode(implode('|', (array) $value["value"]));	
-				} else {
-					$queryString .= urlencode(implode(',', (array) $value["value"]));	
-				}
-				
-				//add a trailing &
-				$queryString .= "&";
-			}
-		}
-		return $queryString;
-	}
+
 }

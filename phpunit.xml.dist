@@ -16,6 +16,10 @@
         <testsuite name="UMD Web API Test Suite">
             <directory>./tests/</directory>
         </testsuite>
+
+        <testsuite name="UMD Web API Integration Tests">
+            <directory>./tests/</directory>
+        </testsuite>
     </testsuites>
 
     <logging>

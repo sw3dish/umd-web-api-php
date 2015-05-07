@@ -119,7 +119,7 @@ class Bus extends Method
      * Type is controlled by Request::setReturnAssoc().
      * More information can be found at http://umd.io/bus/#route_schedules
 	 */
-	public function getRouteLocations($routeId)
+	public function getRouteSchedules($routeId)
 	{	
 		$routeId = urlencode(strtolower($routeId));
 

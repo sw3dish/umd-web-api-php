@@ -3,8 +3,6 @@ namespace UMDWebAPI;
 
 class Bus extends Method
 {
-	private $request = null;
-
 	/**
 	 * Constructor
 	 * Sets up Request object

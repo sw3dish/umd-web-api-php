@@ -38,8 +38,8 @@ class BusTest extends PHPUnit_Framework_TestCase
     	$api = $this->setupMock('routes-multiple');
     	$response = $api->getRoutes(array('109', '115'));
 
-    	$this->assertObjectHasAttribute('route_id', $response['0']);
-    	$this->assertObjectHasAttribute('route_id', $response['1']);
+    	$this->assertObjectHasAttribute('route_id', $response[0]);
+    	$this->assertObjectHasAttribute('route_id', $response[1]);
     }
 
     public function testGetAllRoutes()

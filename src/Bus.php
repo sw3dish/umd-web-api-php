@@ -41,7 +41,12 @@ class Bus extends Method
 		
 		$headers = $this->headers();
 
-		$response = $this->request->api('GET', '/v0/bus/routes/' . $routeIds, array(), $headers);
+		$response = $this->request->api(
+			'GET',
+			'/v0/bus/routes/' . $routeIds,
+			array(),
+			$headers
+		);
 		return $response["body"];
 	}
 	/**
@@ -58,7 +63,12 @@ class Bus extends Method
 	{
 		$headers = $this->headers();
 
-		$response = $this->request->api('GET', '/v0/bus/routes/', array(), $headers);
+		$response = $this->request->api(
+			'GET',
+			'/v0/bus/routes/',
+			array(),
+			$headers
+		);
 		return $response["body"];
 	}
 	/**
@@ -78,8 +88,12 @@ class Bus extends Method
 
 		$headers = $this->headers();
 
-		$response = $this->request->api('GET', 'v0/bus/routes/' . $routeId . 
-									'/locations/', array(), $headers);
+		$response = $this->request->api(
+			'GET', 
+			'v0/bus/routes/' . $routeId . '/locations/',
+			array(),
+			$headers
+		);
 		return $response["body"];
 	}
 	/**
@@ -102,8 +116,12 @@ class Bus extends Method
 
 		$headers = $this->headers();
 
-		$response = $this->request->api('GET', 'v0/bus/routes/' . $routeId . 
-									'/arrivals/' . $stopId, array(), $headers);
+		$response = $this->request->api(
+			'GET',
+			'v0/bus/routes/' . $routeId . '/arrivals/' . $stopId,
+			array(),
+			$headers
+		);
 		return $response["body"];
 	}
 	/**
@@ -123,8 +141,12 @@ class Bus extends Method
 
 		$headers = $this->headers();
 
-		$response = $this->request->api('GET', '/v0/bus/routes/' . $routeId . 
-									'/schedules/', array(), $headers);
+		$response = $this->request->api(
+			'GET',
+			'/v0/bus/routes/' . $routeId . '/schedules/',
+			array(),
+			$headers
+		);
 		return $response["body"];
 	}
 	/*
@@ -150,7 +172,13 @@ class Bus extends Method
 
 		$headers = $this->headers();
 
-		$response = $this->request->api('GET', '/v0/bus/stops/' . $stopId, array(), $headers);
+		$response = $this->request->api(
+			'GET',
+			'/v0/bus/stops/' . $stopId,
+			array(),
+			$headers
+		);
+
 		return $response["body"];
 	}
 	/**
@@ -169,7 +197,13 @@ class Bus extends Method
 	{
 		$headers = $this->headers();
 
-		$response = $this->request->api('GET', '/v0/bus/stops/', array(), $headers);
+		$response = $this->request->api(
+			'GET',
+			'/v0/bus/stops/',
+			array(),
+			$headers
+		);
+
 		return $response["body"];
 	}
 	/*
@@ -192,7 +226,13 @@ class Bus extends Method
 	{
 		$headers = $this->headers();
 
-		$response = $this->request->api('GET', '/v0/bus/locations/', array(), $headers);
+		$response = $this->request->api(
+			'GET',
+			'/v0/bus/locations/',
+			array(),
+			$headers
+		);
+		
 		return $response["body"];
 	}
 }

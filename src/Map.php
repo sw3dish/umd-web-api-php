@@ -30,8 +30,8 @@ class Map extends Method
      * - string $buildingIds : single building number
      * - array $buildingIds : an array of building numbers
      *
-     * @return array|object : The response body. Contains one or more Building objects.
-     * Type is controlled by Request::setReturnAssoc().
+     * @return array|object : The response body. Contains one or more Building 
+     * objects. Type is controlled by Request::setReturnAssoc().
      * More information can be found at http://umd.io/map/#building_object
 	 */
 	public function getBuildings($buildingIds) 
@@ -40,8 +40,13 @@ class Map extends Method
 
 		$headers = $this->headers();
 
-		$response = $this->request->api('GET', '/v0/map/buildings/' . $buildingIds, array(), $headers);
-
+		$response = $this->request->api(
+			'GET',
+			'/v0/map/buildings/' . $buildingIds,
+			array(),
+			$headers
+		);
+		
 		return $response["body"];
 	}
 	/**
@@ -49,15 +54,20 @@ class Map extends Method
      * http://api.umd.io/v0/map/buildings
      * for more information, see http://umd.io/map/#list_buildings
      *
-     * @return array|object : The response body. Contains one or more Building objects.
-     * Type is controlled by Request::setReturnAssoc().
+     * @return array|object : The response body. Contains one or more Building
+     * objects. Type is controlled by Request::setReturnAssoc().
      * More information can be found at http://umd.io/map/#building_object
 	 */
 	public function getAllBuildings()
 	{
 		$headers = $this->headers();
 
-		$response = $this->request->api('GET', '/v0/map/buildings/', array(), $headers);
+		$response = $this->request->api(
+			'GET',
+			'/v0/map/buildings/',
+			array(),
+			$headers
+		);
 
 		return $response["body"];
 	}

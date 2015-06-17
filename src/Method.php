@@ -13,7 +13,7 @@ class Method
 	 * 
 	 * @return void
 	 */
-	protected function __construct($request = null)
+	public function __construct($request = null)
 	{
 		if (is_null($request)) {
 			$request = new Request();
@@ -22,8 +22,8 @@ class Method
 		$this->request = $request;
 	}
 	/**
-     * Add additional headers that may be implemented in later versions (such as auth, etc)
-     * of the umd.io API i.e. authorization
+     * Add additional headers that may be implemented in later versions (such as
+     * auth, etc) of the umd.io API i.e. authorization
      * As of v 0.1.0, none are needed 
      *
      * @return array: any additional headers.
@@ -38,8 +38,8 @@ class Method
 	 * Convert params array into query string
 	 * @see Course::searchCourses, Course::searchSections
 	 *
-	 * @param array $params : An associative array parameters to be included in the
-     * query string.
+	 * @param array $params : An associative array parameters to be included in
+     * the query string.
      *
      * @return string : Query string to be used in the url of the api request.
 	 */
@@ -60,11 +60,16 @@ class Method
 					} else {
 						$queryString .= "=";
 					}
-					//add the value to the string, after expanding the array if there is one.
+					//add the value to the string, after expanding the array if
+					//there is one.
 					if (isset($value["includeAllValues"])) {
-						$queryString .= urlencode(implode('|', (array) $value["value"]));	
+						$queryString .= urlencode(
+							implode('|', (array) $value["value"])
+						);	
 					} else {
-						$queryString .= urlencode(implode(',', (array) $value["value"]));	
+						$queryString .= urlencode(
+							implode(',', (array) $value["value"])
+						);	
 					}
 					
 					//add a trailing &

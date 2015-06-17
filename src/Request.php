@@ -21,9 +21,18 @@ class Request
 	 * - string headers: Response headers.
 	 * - int status: HTTP status code.
 	 */
-	public function api($method, $uri, $parameters = array(), $headers = array())
-	{
-		return $this->send($method, self::API_URL . $uri, $parameters, $headers);
+	public function api(
+        $method,
+        $uri,
+        $parameters = array(),
+        $headers = array()
+        ) {
+		return $this->send(
+            $method,
+            self::API_URL . $uri,
+            $parameters,
+            $headers
+        );
 	}
     /**
      * Make a request to umd.io
@@ -39,8 +48,12 @@ class Request
      * - string headers: Response headers.
      * - int status: HTTP status code.
      */
-    public function send($method, $url, $parameters = array(), $headers = array())
-    {
+    public function send(
+        $method,
+        $url,
+        $parameters = array(),
+        $headers = array()
+        ) {
     	// Sometimes a JSON object is passed
         if (is_array($parameters) || is_object($parameters)) {
             $parameters = http_build_query($parameters);
@@ -103,7 +116,10 @@ class Request
         	if (!$this->returnAssoc && isset($error->error_code)) {           
                 // These properties only exist on API calls, not auth calls
                 if (isset($error->message) && isset($error->error_code)) {
-                    throw new UMDWebAPIException($error->message, $error->error_code);
+                    throw new UMDWebAPIException(
+                        $error->message,
+                        $error->error_code
+                    );
                 } elseif (isset($error->message)) {
                 	throw new UMDWebAPIException($error->message, $status);            
                 } else {
@@ -112,14 +128,20 @@ class Request
             } elseif ($this->returnAssoc && isset($error['error_code'])) {
                 // These properties only exist on API calls, not auth calls
                 if (isset($error['message']) && isset($error['error_code'])) {
-                    throw new UMDWebAPIException($error['message'], $error['error_code']);
+                    throw new UMDWebAPIException(
+                        $error['message'],
+                        $error['error_code']
+                    );
                 } elseif (isset($error['message'])) {
                 	throw new UMDWebAPIException($error['message'], $status);
                 } else {
                     throw new UMDWebAPIException($error, $status);
                 }
             } else {
-                throw new UMDWebAPIException('No \'error\' provided in response body', $status);
+                throw new UMDWebAPIException(
+                    'No \'error\' provided in response body',
+                    $status
+                );
             }
         }
 
